@@ -1,3 +1,3 @@
-# The_Most_Simple_Step_Counter
+# The Most Simple Step Counter
 
 ## Counting my steps using Swift 3 !
