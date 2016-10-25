@@ -32,14 +32,6 @@ class ViewController: UIViewController {
     let myPedometer = CMPedometer(
     )
     
-    
-
-
-    
-    
-    // func if pedometer hits 10,000
-    
-    
     // String to Hold Data  // * these are the important variables used in the labels
     var historicStepData = ""
     var stepData24hrs = ""
