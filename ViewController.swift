@@ -11,6 +11,8 @@ import CoreMotion  // import CoreMotion
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var progBar: UIProgressView!
+    
     // UI Labels   // * these are important labels
     @IBOutlet weak var labelCurrentSteps: UILabel!
     @IBOutlet weak var labelCurrentDistance: UILabel!
@@ -27,7 +29,15 @@ class ViewController: UIViewController {
     var authorizationAvail = false
     
     //  Class Level Pedometer Object
-    let myPedometer = CMPedometer()
+    let myPedometer = CMPedometer(
+    )
+    
+    
+
+
+    
+    
+    // func if pedometer hits 10,000
     
     
     // String to Hold Data  // * these are the important variables used in the labels
@@ -61,13 +71,19 @@ class ViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad(
+        )
         // Do any additional setup after loading the view, typically from a nib.
         writeInGeneralMessagesTextView("Application Loaded")
         writeInGeneralMessagesTextView("Checking Availablity On This Device")
         checkAvailablity()
         
         getHistoricalData()
+        labelCurrentSteps.textColor = UIColor.magenta
+        labelCurrentDistance.textColor = UIColor.magenta
+        labelLast24Hrs.textColor = UIColor.magenta
+        labelLast7Days.textColor = UIColor.magenta
+        
         
         
     }
@@ -162,13 +178,20 @@ class ViewController: UIViewController {
         
     }
     
+    
+    
     // Get Live Step and Distance Data
     func getLiveStepData(){
         let now = Date()
 
         myPedometer.startUpdates(from: now, withHandler: { data, error in
             
+            
+            
             if (error == nil){
+        
+                self.progBar.setProgress((Float(data!.numberOfSteps))/10000.0, animated: true)
+                
                 self.stepDataNow = "\(data!.numberOfSteps) "
                 self.distanceDataNow = (data?.distance?.doubleValue)! / 1609.00
                 
@@ -181,9 +204,12 @@ class ViewController: UIViewController {
 
     }
 
+    
     // Display Current Data
     func displayLiveStepData(){
         labelCurrentSteps?.text = stepDataNow + " Steps"
+        
+        
       //  labelCurrentDistance.text = distanceDataNow + " Kilos"
         
         let myString = String.localizedStringWithFormat("%.5f %@", distanceDataNow, "Miles")
